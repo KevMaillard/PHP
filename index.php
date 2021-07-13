@@ -21,7 +21,7 @@
             </nav>
             <section class="col-9">
                     <button type="button" class="btn btn-primary">Ajouter des données</button>
-                <!-- <?php include 'includes/form.inc.html';?> -->
+                <?php include 'includes/form.inc.html';?>
             </section>
     </div>
 
