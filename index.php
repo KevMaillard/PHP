@@ -1,12 +1,10 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <title>PHP</title>
+    <?php include 'includes/head.inc.html';?>
 </head>
 <body>
 
@@ -14,14 +12,106 @@
         <?php include 'includes/header.inc.html';?>
     </header>
 
-    <div class="row">
-            <nav class="col-3 px-5">
-                    <button type="button" class="btn btn-outline-secondary mx-auto btn-block">Home</button>
-                <?php include 'includes/ul.inc.html';?>
+    <div class="container-fluid row mx-0 py-3">
+            <nav class="col-md-3 pb-3">
+                    <a href="index.php"><button type="button" class="btn btn-outline-secondary mx-auto btn-block">Home</button></a>
+                <?php
+                if (!empty($_SESSION)){
+                    include('includes/ul.inc.html');
+                    $table = $_SESSION['table'];
+                }   
+                    ?>
             </nav>
-            <section class="col-9">
-                    <button type="button" class="btn btn-primary">Ajouter des données</button>
-                <?php include 'includes/form.inc.html';?>
+            <section class="col-md-9">
+               
+                <?php 
+                    if (isset($_GET['add'])){
+                        include 'includes/form.inc.html';
+                    }
+                    elseif (isset($_POST['enregistrer'])){
+                        $prenom = $_POST['prenom'];
+                        $nom = $_POST['nom'];
+                        $age = $_POST['age'];
+                        $taille = $_POST['taille'];
+                        $situation = $_POST['situation'];
+
+                        $table = array(
+                            'first_name' => $prenom,
+                            'last_name' => $nom,
+                            'age' => $age,
+                            'size' => $taille,
+                            'situation' => $situation
+                        );
+                        $_SESSION['table'] = $table;
+                        echo "<h2>Données sauvegardées</h2>";
+
+                    }
+
+                    elseif (isset($_GET['del'])){
+                        unset($_SESSION['table']);
+                        echo "<h2>Données supprimées</h2>";
+
+                    }
+
+                    elseif (isset($_GET['debugging'])){
+                        echo "<h2>Débogage</h2><br>";
+                        print "<pre>";
+                        print_r ($table);
+                        print "</pre>";
+                    }
+
+                    elseif (isset($_GET['concatenation'])){
+                        echo "<h2>Concaténation</h2>";
+                        echo "<br>===> Construction d'une phrase avec le contenu du tableau :";
+                        echo "<h2>".$table['first_name']." ".$table['last_name']."</h2>";
+                        echo "<p>".$table['age']." "."ans,"." "."je mesure"." ".$table['size']."m"." "."et je fais parti des"." ".$table['situation']." "."de la promo Simplon.</p>";
+
+                        echo "<br>===> Construction d'une phrase après MAJ du tableau :";
+                        $table['first_name'] = ucfirst($table['first_name']);
+                        $table['last_name'] = strtoupper($table['last_name']);
+                        echo "<h2>".$table['first_name']." ".$table['last_name']."</h2>";
+                        echo "<p>".$table['age']." "."ans,"." "."je mesure"." ".$table['size']."m"." "."et je fais parti des"." ".$table['situation']." "."de la promo Simplon.</p>";
+
+                        echo "<br>===> Affichage d'une virgule à la place du point pour la taille :";
+                        $table['first_name'] = ucfirst($table['first_name']);
+                        $table['last_name'] = strtoupper($table['last_name']);
+                        $table['size'] = str_replace('.',',',$table['size']);
+                        echo "<h2>".$table['first_name']." ".$table['last_name']."</h2>";
+                        echo "<p>".$table['age']." "."ans,"." "."je mesure"." ".$table['size']."m"." "."et je fais parti des"." ".$table['situation']." "."de la promo Simplon.</p>";
+                    }
+
+                    elseif (isset($_GET['loop'])){
+                        echo "<h2>Boucle</h2><br>";
+                        echo "===> Lecture du tableau à l'aide d'une boucle foreach <br><br>";
+
+                        $i=0;
+                        foreach($table as $key => $value){
+                            echo 'à la ligne n°'.$i++.' correspond à la clé "'.$key.'" et contient "'.$value.'"<br>';
+                        }
+
+                    }
+
+                    elseif (isset($_GET['function'])){
+                        echo "<h2>Fonction</h2><br>";
+                        echo "===> J'utilise ma fonction readTable()<br><br>";
+                        readTable($table);
+
+                    }
+
+                    else {
+                        echo "<a href='index.php?add'><button type='button' class='btn btn-primary'>Ajouter des données</button></a>";
+                    }
+
+                    function readTable($table){
+                        $i=0;
+                        foreach($table as $key => $value){
+                            echo 'à la ligne n°'.$i++.' correspond à la clé "'.$key.'" et contient "'.$value.'"<br>';
+                        }
+
+                    }
+                        
+
+                ?>
             </section>
     </div>
 

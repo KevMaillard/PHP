@@ -1,33 +1,33 @@
-<form>
+<form action="index.php" method="POST">
     <div class="titre text-center"><h1>Ajouter des données</h1></div>
     <div class="form-group">
       <label for="exampleInputprenom">Prénom</label>
-      <input type="text" class="form-control" id="prenom" placeholder="Renseignez votre prénom">
+      <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Renseignez votre prénom">
     </div>
     <div class="form-group">
       <label for="exampleInputnom">Nom</label>
-      <input type="text" class="form-control" id="nom" placeholder="Renseignez votre nom">
+      <input type="text" class="form-control" name="nom" id="nom" placeholder="Renseignez votre nom">
     </div>
     <div class="form-group">
       <label for="exampleInputage">Age (18 à 60 ans)</label>
-      <input min="18" max="60" type="number" class="form-control" id="age" placeholder="Renseignez votre âge">
+      <input min="18" max="60" type="number" class="form-control" name="age" id="age" placeholder="Renseignez votre âge">
     </div>
     <div class="input-group">
         <span class="input-group-text">Taille (entre 1,6 et 2m)</span>
-        <input type="number" min="1.6" max="2" step="0.01" aria-label="First name" class="form-control">
+        <input type="number" min="1.6" max="2" step="0.01" name="taille" aria-label="First name" class="form-control">
         <span class="input-group-text">M</span>
     </div>
     <div class="form-check pt-3">
-        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+        <input class="form-check-input" type="radio" name="situation" id="exampleRadios1" value="apprenants" checked>
         <label class="form-check-label" for="exampleRadios1">
           Apprenant
         </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+        <input class="form-check-input" type="radio" name="situation" id="exampleRadios2" value="formateurs">
         <label class="form-check-label" for="exampleRadios2">
           Formateur
         </label>
       </div>
-    <div class="bouton text-right"><button type="submit" class="btn btn-primary">Enregistrer les données</button></div>
+    <div class="bouton text-right"><button name="enregistrer" type="submit" class="btn btn-primary">Enregistrer les données</button></div>
   </form>
